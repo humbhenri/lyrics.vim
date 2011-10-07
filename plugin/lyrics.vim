@@ -25,14 +25,14 @@ fun! s:DownloadLyrics(url)
     return html
 endfun
 
-
+" Prepare song and artist name to remove unwanted chars in lyrics.com url
 fun! s:Prepare(string)
     let delChars = ')\|(\|\.\|\n\|''\|^\s\+\|\s\+$\|\r\n\|!'
     let string = substitute(a:string, delChars, '', 'g')
     return string
 endfun
 
-" format for the site lyrics.com"
+" Format for the site lyrics.com
 fun! s:PrepareSongArtist(song, artist)
     let song     = substitute(a:song, '\s', '-' ,"g")
     let artist   = substitute(a:artist, '\s', '-',"g")
@@ -40,11 +40,11 @@ fun! s:PrepareSongArtist(song, artist)
 endfun
 
 fun! s:ShowLyrics(song, artist)
-    let url = s:lyrics_site
+    let url            = s:lyrics_site
     let [song, artist] = s:PrepareSongArtist(a:song, a:artist)
-    let url = substitute(url, 'song', song, "g")
-    let url = substitute(url, 'artist', artist, "g")
-    let lyrics = s:DownloadLyrics(url)
+    let url            = substitute(url, 'song', song, "g")
+    let url            = substitute(url, 'artist', artist, "g")
+    let lyrics         = s:DownloadLyrics(url)
     botright new
     setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
     silent! execute "normal! a " . a:song . " - " . a:artist . "\n" .lyrics
@@ -61,19 +61,19 @@ fun! s:RhythmboxLyrics()
         return
     endif
     " lyrics.com url requirements
-    let delChars = ')\|(\|\.\|\n\|'''
+    let delChars       = ')\|(\|\.\|\n\|'''
     let currentPlaying = substitute(currentPlaying, delChars, '', 'g')
     let [artist, song] = split(currentPlaying, '-')
-    let artist = substitute(artist, '^\s\+\|\s\+$\|\r\n', '', 'g')
-    let song   = substitute(song, '^\s\+\|\s\+$\|\r\n', '', 'g')
+    let artist         = substitute(artist, '^\s\+\|\s\+$\|\r\n', '', 'g')
+    let song           = substitute(song, '^\s\+\|\s\+$\|\r\n', '', 'g')
     call s:ShowLyrics(song, artist)
 endfun
 
 fun! s:SearchLyrics()
     call inputsave()
-    let inputStr = input('Enter song-artist: ')
+    let inputStr       = input('Enter song-artist: ')
     call inputrestore()
-    let inputStr = s:Prepare(inputStr)
+    let inputStr       = s:Prepare(inputStr)
     let [song, artist] = split(inputStr, '-')
     call s:ShowLyrics(song, artist)
 endfun
