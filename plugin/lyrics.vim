@@ -28,7 +28,7 @@ endfun
 " Prepare song and artist name to remove unwanted chars in lyrics.com url
 fun! s:Prepare(string)
     let delChars = ')\|(\|\.\|\n\|''\|^\s\+\|\s\+$\|\r\n\|!'
-    let string = substitute(a:string, delChars, '', 'g')
+    let string   = substitute(a:string, delChars, '', 'g')
     return string
 endfun
 
@@ -71,14 +71,14 @@ endfun
 
 fun! s:SearchLyrics()
     call inputsave()
-    let inputStr       = input('Enter song-artist: ')
+    let  inputStr       = input('Enter song-artist:    ')
     call inputrestore()
-    let inputStr       = s:Prepare(inputStr)
-    let [song, artist] = split(inputStr, '-')
+    let  inputStr       = s:Prepare(inputStr)
+    let  [song, artist] = split(inputStr, '-')
     call s:ShowLyrics(song, artist)
 endfun
 
-command! Lyrics call s:RhythmboxLyrics()
+command! Lyrics       call s:RhythmboxLyrics()
 command! SearchLyrics call s:SearchLyrics()
 
 let &cpo = cpo_save
