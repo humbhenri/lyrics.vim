@@ -61,8 +61,7 @@ fun! s:RhythmboxLyrics()
         return
     endif
     " lyrics.com url requirements
-    let delChars       = ')\|(\|\.\|\n\|'''
-    let currentPlaying = substitute(currentPlaying, delChars, '', 'g')
+    let currentPlaying = s:Prepare(currentPlaying)
     let [artist, song] = split(currentPlaying, '-')
     let artist         = substitute(artist, '^\s\+\|\s\+$\|\r\n', '', 'g')
     let song           = substitute(song, '^\s\+\|\s\+$\|\r\n', '', 'g')
